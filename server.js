@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -6,11 +5,14 @@ const cors = require('cors');
 const app = express();
 app.use(cors());
 
-// Connect to MongoDB
-mongoose.connect('mongodb://localhost/dblp', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+// Connect to MongoDB replica set
+mongoose.connect('mongodb://mongo1:27017,mongo2:27017,mongo3:27017/DBLP?replicaSet=myReplicaSet')
+  .then(() => {
+    console.log('MongoDB connected');
+  })
+  .catch(err => {
+    console.error('MongoDB connection error:', err);
+  });
 
 // Create a schema for the "publis" collection
 const publisSchema = new mongoose.Schema({

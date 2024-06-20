@@ -1,4 +1,3 @@
-// App.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
@@ -26,7 +25,7 @@ const App = () => {
       setPublis(response.data.publis);
       setTotalPages(response.data.totalPages);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Erreur lors de la récupération des données:', error);
     }
   };
 
@@ -78,11 +77,11 @@ const App = () => {
 
   return (
     <div className="app">
-      <h1>DBLP Database</h1>
+      <h1>Base de données DBLP</h1>
       <div className="search-container">
         <input
           type="text"
-          placeholder="Search by title or authors"
+          placeholder="Recherche par titre ou auteurs"
           value={search}
           onChange={handleSearch}
         />
@@ -91,50 +90,51 @@ const App = () => {
       <table>
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Authors</th>
-            <th>Year</th>
-            <th>Booktitle</th>
+            <th>Titre</th>
+            <th>Auteurs</th>
+            <th>Année</th>
+            <th>Titre du livre</th>
             <th>Pages</th>
             <th>URL</th>
           </tr>
         </thead>
         <tbody>
-  {publis.map((publi) => (
-    <tr key={publi._id}>
-      <td>{publi.title}</td>
-      <td>{publi.authors.join(', ')}</td>
-      <td>{publi.year}</td>
-      <td>{publi.booktitle}</td>
-      <td>
-        {publi.pages && publi.pages.start && publi.pages.end ? (
-          <>
-            {publi.pages.start} - {publi.pages.end}
-          </>
-        ) : (
-          'N/A'
-        )}
-      </td>
-      <td>
-        {publi.url ? (
-          <a href={publi.url} target="_blank" rel="noopener noreferrer">
-            Link
-          </a>
-        ) : (
-          'N/A'
-        )}
-      </td>
-    </tr>
-  ))}
-</tbody>
+          {publis.map((publi) => (
+            <tr key={publi._id}>
+              <td>{publi.title}</td>
+              <td>{publi.authors.join(', ')}</td>
+              <td>{publi.year}</td>
+              <td>{publi.booktitle}</td>
+              <td>
+                {publi.pages && publi.pages.start && publi.pages.end ? (
+                  <>
+                    {publi.pages.start} - {publi.pages.end}
+                  </>
+                ) : (
+                  'N/A'
+                )}
+              </td>
+              <td>
+                {publi.url ? (
+                  <a href={publi.url} target="_blank" rel="noopener noreferrer">
+                    Lien
+                  </a>
+                ) : (
+                  'N/A'
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
       <div className="pagination-container">
         {renderPaginationButtons()}
       </div>
       <div className="page-size-container">
         <label>
-          Items per page:
+          Éléments par page:
           <select value={pageSize} onChange={handlePageSizeChange}>
+            <option value="5">5</option>
             <option value="10">10</option>
             <option value="20">20</option>
             <option value="50">50</option>
